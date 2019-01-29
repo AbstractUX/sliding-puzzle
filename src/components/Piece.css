@@ -4,4 +4,9 @@
   border: 1px solid black;
   float: left;
   box-sizing: border-box;
+  background-color: yellow;
+}
+
+.Piece-nullPiece {
+  background-color: #F5F5F5;
 }
