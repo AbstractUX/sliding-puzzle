@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 
-import Piece from './Piece.js';
+import Piece from './Piece';
 import './SlidingPuzzle.css';
-
-const testData = [
-  {row: 0, col: 0, value: 1},
-  {row: 0, col: 1, value: 2},
-  {row: 0, col: 2, value: 3},
-]
+import shuffle from 'shuffle-array';
 
 class SlidingPuzzle extends Component {
   state = {
@@ -76,10 +71,29 @@ class SlidingPuzzle extends Component {
     });
     return sortedPieces;
   }
+  shufflePieces = (piecesData) => {
+    const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, null];
+    shuffle(values);
+
+    const shuffledPieces = piecesData.map((piece, i) => {
+      const newValue = values[i];
+      return { ...piece, value: newValue };
+    });
+    console.log(shuffledPieces);
+    return shuffledPieces;
+  }
+  componentDidMount() {
+    const shuffledPieces = this.shufflePieces(this.state.piecesData);
+    this.setState(() => ({
+      piecesData: shuffledPieces
+    }));
+  }
   render() {
     return (
-      <div className="SlidingPuzzle">
-        {this.renderPieces()}
+      <div>
+        <div className="SlidingPuzzle">
+          {this.renderPieces()}
+        </div>
       </div>
     )
   }
