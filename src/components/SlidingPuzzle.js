@@ -7,22 +7,22 @@ import shuffle from 'shuffle-array';
 class SlidingPuzzle extends Component {
   state = {
     piecesData: [
-      {row: 0, col: 0, value: 1},
-      {row: 0, col: 1, value: 2},
-      {row: 0, col: 2, value: 3},
-      {row: 0, col: 3, value: 4},
-      {row: 1, col: 0, value: 5},
-      {row: 1, col: 1, value: 6},
-      {row: 1, col: 2, value: 7},
-      {row: 1, col: 3, value: 8},
-      {row: 2, col: 0, value: 9},
-      {row: 2, col: 1, value: 10},
-      {row: 2, col: 2, value: 11},
-      {row: 2, col: 3, value: 12},
-      {row: 3, col: 0, value: 13},
-      {row: 3, col: 1, value: 14},
-      {row: 3, col: 2, value: 15},
-      {row: 3, col: 3, value: null},
+      {row: 0, col: 0, value: undefined},
+      {row: 0, col: 1, value: undefined},
+      {row: 0, col: 2, value: undefined},
+      {row: 0, col: 3, value: undefined},
+      {row: 1, col: 0, value: undefined},
+      {row: 1, col: 1, value: undefined},
+      {row: 1, col: 2, value: undefined},
+      {row: 1, col: 3, value: undefined},
+      {row: 2, col: 0, value: undefined},
+      {row: 2, col: 1, value: undefined},
+      {row: 2, col: 2, value: undefined},
+      {row: 2, col: 3, value: undefined},
+      {row: 3, col: 0, value: undefined},
+      {row: 3, col: 1, value: undefined},
+      {row: 3, col: 2, value: undefined},
+      {row: 3, col: 3, value: undefined},
     ]
   }
   sortPieces = (piecesData) => {
@@ -82,11 +82,25 @@ class SlidingPuzzle extends Component {
     console.log(shuffledPieces);
     return shuffledPieces;
   }
+  puzzleIsSolved = (piecesData) => {
+    const expectedValuesOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, null];
+
+    return piecesData.every((piece, i) => {
+      return piecesData[i].value === expectedValuesOrder[i];
+    });
+  }
   componentDidMount() {
     const shuffledPieces = this.shufflePieces(this.state.piecesData);
     this.setState(() => ({
       piecesData: shuffledPieces
     }));
+  }
+  componentDidUpdate() {
+    const solved = this.puzzleIsSolved(this.state.piecesData);
+
+    if (solved) {
+      alert('You solved the puzzle!');
+    }
   }
   render() {
     return (
